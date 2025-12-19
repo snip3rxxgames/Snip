@@ -1,0 +1,76 @@
+/* Filename: style.css */
+:root {
+    --snip-teal: #00ffcc;
+    --snip-sent: #ff5e00;
+    --snip-blue: #00e5ff;
+    --bg-dark: #000;
+    --border-color: #333;
+}
+
+* { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+body { margin: 0; background-color: #000; font-family: sans-serif; height: 100vh; overflow: hidden; display: flex; color: white; }
+
+#app-wrapper { display: flex; width: 100%; height: 100%; }
+#sidebar { width: 320px; background: rgba(0,0,0,0.95); border-right: 1px solid #333; display: flex; flex-direction: column; }
+.sidebar-header { padding: 15px; display: flex; justify-content: space-between; border-bottom: 1px solid #333; }
+.chat-list { overflow-y: auto; flex: 1; }
+.chat-item { padding: 12px 15px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; }
+.chat-item:hover { background: rgba(255,255,255,0.1); }
+.chat-item.active { background: rgba(255,255,255,0.15); }
+.avatar { width: 45px; height: 45px; border-radius: 50%; background: #333; display: flex; align-items: center; justify-content: center; margin-right: 12px; }
+
+#main-stage { flex: 1; background: black; position: relative; display: flex; flex-direction: column; }
+
+/* CHAT STYLES */
+#view-chat { display: none; flex-direction: column; height: 100%; }
+.messages-area { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
+.msg-row { display: flex; flex-direction: column; max-width: 70%; position: relative; margin-bottom: 10px; }
+.friend { align-self: flex-start; }
+.me { align-self: flex-end; }
+.bubble-text { padding: 10px 15px; border-radius: 18px; background: #222; color: #ddd; position: relative; }
+.friend .bubble-text { border-left: 2px solid var(--snip-blue); }
+.me .bubble-text { border-right: 2px solid #555; }
+
+/* REACTION BUTTON (GLUED) */
+.reaction-trigger {
+    display: none; position: absolute; bottom: -8px; width: 24px; height: 24px;
+    background: #111; border: 1px solid #444; border-radius: 50%;
+    align-items: center; justify-content: center; cursor: pointer; z-index: 10;
+}
+.friend:hover .reaction-trigger { display: flex; right: -10px; }
+.reaction-badge {
+    position: absolute; bottom: -12px; width: 22px; height: 22px; background: #1a1a1a;
+    border: 1px solid #333; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 13px; z-index: 2;
+}
+.friend .reaction-badge { right: -10px; }
+.me .reaction-badge { left: -10px; }
+
+/* CAMERA STYLES */
+#view-camera { display: none; width: 100%; height: 100%; position: relative; background: #000; }
+#camera-container { width: 100%; height: 100%; position: relative; overflow: hidden; }
+/* The canvas fills the container */
+#jeeFaceFilterCanvas { 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; 
+    transform: scaleX(-1); /* Mirror effect */
+}
+
+.shutter-bar { position: absolute; bottom: 30px; width: 100%; display: flex; justify-content: center; align-items: center; gap: 30px; z-index: 20; }
+.shutter-btn { width: 80px; height: 80px; border-radius: 50%; border: 5px solid rgba(255,255,255,0.4); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.shutter-inner { width: 65px; height: 65px; background: white; border-radius: 50%; }
+
+.filter-btn { width: 50px; height: 50px; border-radius: 50%; background: #333; border: 1px solid #555; color: white; cursor: pointer; font-size: 20px; }
+.filter-btn.active { background: var(--snip-sent); border-color: red; }
+
+#send-modal { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 30; display: none; flex-direction: column; padding: 20px; }
+.send-list { flex: 1; overflow-y: auto; margin-top: 20px; }
+.send-row { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #333; cursor: pointer; }
+.send-row:hover { background: #222; }
+.send-row.selected { background: #333; }
+
+/* MISC */
+#view-snips { display: none; height: 100%; justify-content: center; }
+#fullscreen-snip-viewer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: black; z-index: 9999; display: none; align-items: center; justify-content: center; }
+#fs-image { height: 100%; width: 100%; object-fit: contain; }
+.chat-input-area { padding: 15px; border-top: 1px solid #333; display: flex; gap: 10px; background: #111; }
+.input-pill { flex: 1; background: #222; border-radius: 25px; padding: 10px; border: none; color: white; }
